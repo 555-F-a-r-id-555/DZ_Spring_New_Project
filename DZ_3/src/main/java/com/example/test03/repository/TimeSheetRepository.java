@@ -22,15 +22,19 @@ public class TimeSheetRepository {
         return projectSequenceMap.merge(projectId, 1L, (oldValue, newValue) -> oldValue + 1);
     }
 
+    public boolean exists(Long projectId) {
+        return projectSequenceMap.containsKey(projectId);
+    }
+
     public Optional<Timesheet> getById(Long id) {
         return timesheets.stream()
                 .filter(t -> Objects.equals(t.getId(), id))
                 .findFirst();
     }
 
-    public List<Timesheet> getAll() {
-        return List.copyOf(timesheets);
-    }
+//    public List<Timesheet> getAll() {
+//        return List.copyOf(timesheets);
+//    }
 
     public List<Timesheet> getAllByProjectId(Long projectId) {
         return timesheets.stream()
@@ -49,4 +53,6 @@ public class TimeSheetRepository {
     public void delete(Long id) {
         timesheets.removeIf(t -> Objects.equals(t.getId(), id));
     }
+
+
 }

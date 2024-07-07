@@ -22,15 +22,25 @@ public class TimeSheetService {
         this.projectService = projectService;
     }
 
-    public Optional<Timesheet> getById(Long id) {
+    public boolean ifExists(Long projectId) {
+        return repository.exists(projectId);
+    }
+
+    public Optional<Timesheet> getById(Long id,Long projectId) {
+        if (!ifExists(projectId)) {
+            throw new IllegalArgumentException("Project with ID " + projectId + " does not exist.");
+        }
         return repository.getById(id);
     }
 
-    public List<Timesheet> getAll() {
-        return repository.getAll();
-    }
+//    public List<Timesheet> getAll() {
+//        return repository.getAll();
+//    }
 
     public List<Timesheet> getAllByProjectId(Long projectId) {
+        if (!ifExists(projectId)) {
+            throw new IllegalArgumentException("Project with ID " + projectId + " does not exist.");
+        }
         return repository.getAllByProjectId(projectId);
     }
 

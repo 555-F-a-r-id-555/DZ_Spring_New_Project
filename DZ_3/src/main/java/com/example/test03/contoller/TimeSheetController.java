@@ -22,7 +22,7 @@ public class TimeSheetController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Timesheet> get(@PathVariable Long projectId, @PathVariable("id") Long id) {
-        Optional<Timesheet> ts = timesheetService.getById(id);
+        Optional<Timesheet> ts = timesheetService.getById(id, projectId);
         if (ts.isPresent()) {
             return ResponseEntity.status(HttpStatus.OK).body(ts.get());
         }
@@ -31,7 +31,12 @@ public class TimeSheetController {
 
     @GetMapping
     public ResponseEntity<List<Timesheet>> getAll(@PathVariable Long projectId) {
-        return ResponseEntity.ok(timesheetService.getAllByProjectId(projectId));
+        try {
+            return ResponseEntity.ok(timesheetService.getAllByProjectId(projectId));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
     }
 
     @GetMapping("/filter")
@@ -45,7 +50,6 @@ public class TimeSheetController {
 
         return ResponseEntity.ok(timesheetService.getAllByProjectIdAndDate(projectId, afterDate, beforeDate));
     }
-
 
 
     @PostMapping
