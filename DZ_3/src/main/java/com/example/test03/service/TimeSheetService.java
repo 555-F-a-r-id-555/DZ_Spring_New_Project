@@ -61,7 +61,10 @@ public class TimeSheetService {
         return repository.create(timesheet, projectId);
     }
 
-    public void delete(Long id) {
+    public void delete(Long id, Long projectId) {
+        if (!ifExists(projectId)) {
+            throw new IllegalArgumentException("Project with ID " + projectId + " does not exist.");
+        }
         repository.delete(id);
     }
 }

@@ -63,7 +63,11 @@ public class TimeSheetController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long projectId, @PathVariable Long id) {
-        timesheetService.delete(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        try {
+            timesheetService.delete(id, projectId);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 }
