@@ -13,6 +13,11 @@ public class ProjectRepository {
     private static long sequence = 1L;
     private final List<Project> projects = new ArrayList<>();
 
+    public boolean exists(Long projectId) {
+        return projects.stream()
+                .anyMatch(t -> Objects.equals(t.getProjectId(), projectId));
+    }
+
     public Optional<Project> getById(Long id) {
         return projects.stream()
                 .filter(t -> Objects.equals(t.getProjectId(), id))

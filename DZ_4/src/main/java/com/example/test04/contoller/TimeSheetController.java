@@ -31,11 +31,7 @@ public class TimeSheetController {
 
     @GetMapping
     public ResponseEntity<List<Timesheet>> getAll(@PathVariable Long projectId) {
-        try {
-            return ResponseEntity.ok(timesheetService.getAllByProjectId(projectId));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
+        return ResponseEntity.ok(timesheetService.getAllByProjectId(projectId));
 
     }
 
@@ -54,20 +50,14 @@ public class TimeSheetController {
 
     @PostMapping
     public ResponseEntity<Timesheet> create(@PathVariable Long projectId, @RequestBody Timesheet timesheet) {
-        try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(timesheetService.create(timesheet, projectId));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(timesheetService.create(timesheet, projectId));
+
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long projectId, @PathVariable Long id) {
-        try {
-            timesheetService.delete(id, projectId);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
+        timesheetService.delete(id, projectId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
     }
 }

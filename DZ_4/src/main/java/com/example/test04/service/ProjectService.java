@@ -18,7 +18,14 @@ public class ProjectService {
         this.projectRepository = repository;
     }
 
+    public boolean ifExists(Long projectId) {
+        return projectRepository.exists(projectId);
+    }
+
     public Optional<Project> getById(Long id) {
+        if (!ifExists(id)) {
+            throw new IllegalArgumentException("Project with ID " + id + " does not exist.");
+        }
         return projectRepository.getById(id);
     }
 
@@ -31,6 +38,9 @@ public class ProjectService {
     }
 
     public void delete(Long id) {
+        if (!ifExists(id)) {
+            throw new IllegalArgumentException("Project with ID " + id + " does not exist.");
+        }
         projectRepository.delete(id);
     }
 }
