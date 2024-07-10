@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class Scoreboard {
 
     //    @Autowired
-    private TicketNumberGenerator ticketNumberGenerator;
+    private final TicketNumberGenerator ticketNumberGenerator;
 
     @Autowired
     public Scoreboard(TicketNumberGenerator ticketNumberGenerator) {
